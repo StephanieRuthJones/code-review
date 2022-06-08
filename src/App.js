@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {useState} from 'react'
+import './App.css'
+import {isLeapYear} from './utils/isLeapYear'
 function App() {
+  const [date, setDate]=useState('')
+  const [year, setYear]=useState('')
+
+  const handleDateChange = (e) => {
+    const fullDate = e.target.value
+    const yearStr = fullDate.slice(0, -6)
+    setDate(fullDate)
+    setYear(yearStr)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <label htmlFor="dateinput">Enter Birthdate</label>
+        <input id="dateinput" type="date" value={date} onChange={handleDateChange}/>
+      </form>
+      <div className="text-output">
+        <p>You <span className="bold">were {isLeapYear(year) ? 'born' : 'not born'}</span> on a leap year.</p>
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
